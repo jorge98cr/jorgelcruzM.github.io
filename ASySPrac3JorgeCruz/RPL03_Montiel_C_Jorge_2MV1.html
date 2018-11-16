@@ -1,0 +1,401 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 3: Se&ntilde;ales en tiempo discreto</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-16"><meta name="DC.source" content="RPL03_Montiel_C_Jorge_2MV1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 3: Se&ntilde;ales en tiempo discreto</h1><!--introduction--><pre>Cruz Montejo Jorge Luis
+Montiel Cruz Jorge de Jes&uacute;s
+2MV1
+An&aacute;lisis de Se&ntilde;ales y Sistemas</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Objetivos</a></li><li><a href="#2">Antecedentes</a></li><li><a href="#3">Desarrollo</a></li><li><a href="#4">1.</a></li><li><a href="#5">2.</a></li><li><a href="#6">3.</a></li><li><a href="#7">4.</a></li><li><a href="#8">5.</a></li><li><a href="#9">6.</a></li><li><a href="#10">Ap&eacute;ndices</a></li><li><a href="#11">Referencias</a></li></ul></div><h2>Objetivos<a name="1"></a></h2><div><ul><li>Manipulaci&oacute;n b&aacute;sica de MATLAB</li><li>Gr&aacute;ficas de se&ntilde;ales reales y complejas discretas</li><li>Transfomraci&oacute;n de se&ntilde;ales discretas (escalamientos y traslaciones)</li><li>C&aacute;lculo de energ&iacute;a y potencia de se&ntilde;ales discretas</li></ul></div><h2>Antecedentes<a name="2"></a></h2><p>Escalamiento horizontal de se&ntilde;ales discretas</p><p>El escalamiento de se&ntilde;ales en tiempo discreto, tanto horizontal como vertical, tiene un s&iacute;mil con su contraparte del tiempo continuo, sin embargo, existen ciertas consideraciones a tomar en cuenta a la hora de aplicarlo a las se&ntilde;ales del tiempo discreto, esto es, como a continuaci&oacute;n se detalla.</p><p>Un esclamiento vertical de se&ntilde;ales, tanto en tiempo discreto como en tiempo continuo, funciona de la misma manera, las se&ntilde;ales correspondientes se mueven hacia arriba o abajo, seg&uacute;n corresponda, sin incoveniente alguno. Pero cuando se realiza un escalamiento horizontal,  ya sea de compresi&oacute;n o expansi&oacute;n, la se&ntilde;al en tiempo discreto sufre algunos cambios, esto es, pues, debido a la forma en la que est&aacute; definida (en los n&uacute;meros enteros), de esta manera, cuando escalamos horizontalmente con efecto de compresi&oacute;n existe una perdida de datos. Esto es f&aacute;cil de ver, puesto que al efectuar la divisi&oacute;n esta resultar&aacute; en ciertos puntos un n&uacute;mero decimal, para los cuales nuestra funci&oacute;n de tiempo discreto no est&aacute; definida. Decimos que existe p&eacute;rdida de datos. Mientras que para los escalamientos horizontales con efecto de expansi&oacute;n habr&aacute; que realizar una consideraci&oacute;n &uacute;til, y es que se indefine en ciertos puntos. En los siguientes ejemplos se detalla lo anteriormente expuesto.</p><p><b>Ejemplo 1: Compresi&oacute;n</b></p><p>Sea la se&ntilde;al <img src="RPL03_Montiel_C_Jorge_2MV1_eq17924167568066421134.png" alt="$x[n]$"> una se&ntilde;al del tiempo discreto, con la siguiente expresi&oacute;n <img src="RPL03_Montiel_C_Jorge_2MV1_eq15466069596140890681.png" alt="$x[n]=(n-2) u[n]$">, su gr&aacute;fica correspondiente</p><p><img vspace="5" hspace="5" src="EjP3_1.jpg" alt=""> </p><p>Si hacemos ahora <img src="RPL03_Montiel_C_Jorge_2MV1_eq06810368292641558814.png" alt="$x[5n]=(5n-2) u[n]$"> tendremos como resultado una p&eacute;rdida de datos.</p><p><img vspace="5" hspace="5" src="EjP3_1_1.jpg" alt=""> </p><p>de la primera figura vemos que para <img src="RPL03_Montiel_C_Jorge_2MV1_eq04968715417579708634.png" alt="$n=2$"> el valor de la se&ntilde;al es <img src="RPL03_Montiel_C_Jorge_2MV1_eq00202142981986870057.png" alt="$0$">, mientras que en la segunda figura, puesto que se comprimi&oacute; por un factor de <img src="RPL03_Montiel_C_Jorge_2MV1_eq17414748974537904790.png" alt="$5$"> y al ser 2 un n&uacute;mero cuya divisi&oacute;n por <img src="RPL03_Montiel_C_Jorge_2MV1_eq17414748974537904790.png" alt="$5$"> no es un entero, entonces, este dato se pierde.</p><p><b>Ejemplo 2: Expansi&oacute;n</b></p><p>Sea la se&ntilde;al <img src="RPL03_Montiel_C_Jorge_2MV1_eq17924167568066421134.png" alt="$x[n]$"> una se&ntilde;al del tiempo discreto, con la siguiente expresi&oacute;n <img src="RPL03_Montiel_C_Jorge_2MV1_eq06409554592509948846.png" alt="$x[n]=(n-2)^2 u[n]$">, su gr&aacute;fica correspondiente</p><p><img vspace="5" hspace="5" src="Ej2P3_1.jpg" alt=""> </p><p>Si hacemos ahora <img src="RPL03_Montiel_C_Jorge_2MV1_eq16862870953676502190.png" alt="$x[5n]=5n-2 u[n]$"> tendremos como resultado puntos sin definir.</p><p><img vspace="5" hspace="5" src="Ej2P3_1_2.jpg" alt=""> </p><p>Vemos de la primera figura que para <img src="RPL03_Montiel_C_Jorge_2MV1_eq16789844994363566909.png" alt="$n=1$"> el valor de la se&ntilde;al es <img src="RPL03_Montiel_C_Jorge_2MV1_eq18395870634560867587.png" alt="$1$">, as&iacute; pues, al expandir por un factor de 4, este valor corresponder&aacute; a <img src="RPL03_Montiel_C_Jorge_2MV1_eq17979244203235740440.png" alt="$n=4$"> de la segunda figura, mientras que de de <img src="RPL03_Montiel_C_Jorge_2MV1_eq16572752053440363549.png" alt="$(4,12)$"> no existen los valores, puesto que, de existir, significa que en la funci&oacute;n original exist&iacute;an puntos cuya multiplicaci&oacute;n por 4 nos arroja un n&uacute;mero en este intervalo, lo cual quiere decir, en otras palabras, estaba definida para n&uacute;meros no enteros, lo cual no va acorde a nuestra definici&oacute;n de se&ntilde;al en tiempo discreto.</p><p>Convenientemente, se pueden asignar valores de cero o bien realizar interpolaci&oacute;n para asignar un valor a los valores de <img src="RPL03_Montiel_C_Jorge_2MV1_eq08984225997457563733.png" alt="$n$"> para los cuales no est&eacute; definida la se&ntilde;al escalada.</p><h2>Desarrollo<a name="3"></a></h2><h2>1.<a name="4"></a></h2><p>Crea una funci&oacute;n que se llame <i>fun1</i> y reciba tres par&aacute;metros <img src="RPL03_Montiel_C_Jorge_2MV1_eq04958265083611378313.png" alt="$r$">, <img src="RPL03_Montiel_C_Jorge_2MV1_eq08589834809570054062.png" alt="$\omega$"> y <img src="RPL03_Montiel_C_Jorge_2MV1_eq08984225997457563733.png" alt="$n$"> la funci&oacute;n debe regresar la evaluaci&oacute;n <img src="RPL03_Montiel_C_Jorge_2MV1_eq08808565345268248811.png" alt="$f[n]=r^n\cos{[\omega n]}+ r^nj\sin{[\omega n]}$">, esta funci&oacute;n debe trabajar con <img src="RPL03_Montiel_C_Jorge_2MV1_eq15215077038603535691.png" alt="$r \in R^{+}$">, <img src="RPL03_Montiel_C_Jorge_2MV1_eq00022299025218996180.png" alt="$\omega \in R$"> y <img src="RPL03_Montiel_C_Jorge_2MV1_eq05229576485702666809.png" alt="$n \in N^{n}$"></p><pre class="language-matlab"><span class="keyword">function</span> y=fun1(r,omega,n)
+n2=n/floor(n);
+n3=uint8(n2);
+<span class="keyword">if</span> r&gt;0 &amp;&amp; imag(omega)==0 &amp;&amp; n3==1
+f=r.^n.*cos(omega*n)+r.^n*1i.*sin(omega*n)
+<span class="keyword">else</span>
+disp(<span class="string">'La funcion solo es valida si r es un real positivo, omega es un real y n pertenece a los enteros'</span>)
+f=(<span class="string">'funcion no definida'</span>);
+<span class="keyword">end</span>
+y=f;
+<span class="keyword">end</span>
+</pre><h2>2.<a name="5"></a></h2><p>Construya una funci&oacute;n que grafique funciones de <img src="RPL03_Montiel_C_Jorge_2MV1_eq12888934164539987532.png" alt="$f:N\rightarrow R$"> en el formato de su elecci&oacute;n y pruebe su c&oacute;digo mostrando la gr&aacute;fica de <img src="RPL03_Montiel_C_Jorge_2MV1_eq14492615976455928922.png" alt="$x[n]=na^nu[n]$"> vs <img src="RPL03_Montiel_C_Jorge_2MV1_eq08984225997457563733.png" alt="$n$"> para <img src="RPL03_Montiel_C_Jorge_2MV1_eq14178556397766412184.png" alt="$n \in -2,...,10$"> para <img src="RPL03_Montiel_C_Jorge_2MV1_eq00212765013998882747.png" alt="$a=0.9$"></p><p><img vspace="5" hspace="5" src="P3_2_2_2.jpg" alt=""> </p><h2>3.<a name="6"></a></h2><p>Construya una funci&oacute;n que grafique funciones <img src="RPL03_Montiel_C_Jorge_2MV1_eq00225549005825272617.png" alt="$f:N \rightarrow R^2$"> en el formato de su elecci&oacute;n y pruebe su c&oacute;digo mostrando la gr&aacute;fica de la funci&oacute;n exponencial del primer problema, muestre la gr&aacute;fica de <img src="RPL03_Montiel_C_Jorge_2MV1_eq08869918233192190351.png" alt="$f[n]$"> para <img src="RPL03_Montiel_C_Jorge_2MV1_eq12706977765372392117.png" alt="$r=1.1$">, <img src="RPL03_Montiel_C_Jorge_2MV1_eq09922316310549905965.png" alt="$\omega=0.5$"> y <img src="RPL03_Montiel_C_Jorge_2MV1_eq05800054283186087916.png" alt="$n \in -2,...,20$"> , adem&aacute;s, muestre la gr&aacute;fica de <img src="RPL03_Montiel_C_Jorge_2MV1_eq05380890773232186944.png" alt="$|f[n]|$"> vs <img src="RPL03_Montiel_C_Jorge_2MV1_eq08984225997457563733.png" alt="$n$"> y <img src="RPL03_Montiel_C_Jorge_2MV1_eq12048250087022819900.png" alt="$\angle f[n]$"> vs <img src="RPL03_Montiel_C_Jorge_2MV1_eq08984225997457563733.png" alt="$n$">.</p><p><img vspace="5" hspace="5" src="P3_3.jpg" alt=""> </p><p><img vspace="5" hspace="5" src="P3_3_2.jpg" alt=""> </p><p><img vspace="5" hspace="5" src="P3_3_3.jpg" alt=""> </p><h2>4.<a name="7"></a></h2><p>Programe una funci&oacute;n que calcule la energ&iacute;a de una se&ntilde;al en tiempo discreto la funci&oacute;n se debe llamar energiadis. La funci&oacute;n recibe dos par&aacute;metros de entrada: el vector de tiempo y las alturas asignadas. La funci&oacute;n regresa la energ&iacute;a de la se&ntilde;al y despliega la gr&aacute;fica de la se&ntilde;al.</p><pre class="language-matlab"><span class="keyword">function</span> y=energiadis(t,x)
+<span class="comment">%x son las alturas de la se&ntilde;al discreta</span>
+<span class="comment">%t es el vector de tiempo</span>
+x2=x.^2;
+E=sum(x2)
+y=E;
+fprintf(<span class="string">'La energia de la se&ntilde;al es: %4.4f'</span>,y);
+stem(t,x);
+a=abs(t(1))+.5;
+b=abs(t(end))+.5;
+c=abs(min(x))+.5;
+d=abs(max(x))+.5;
+<span class="keyword">if</span> min(x)&gt;=0;
+axis([-a b, 0 d])
+<span class="keyword">else</span>
+axis([-a b, -c d])
+<span class="keyword">end</span>
+grid <span class="string">on</span>
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+<span class="keyword">end</span>
+</pre><h2>5.<a name="8"></a></h2><p>Resuelva el problema 3.1.1 de Lathi, aplicando su funci&oacute;n anterior</p><pre class="codeinput">t=-3:3; x=-9:3:9;
+energia(t,x)
+</pre><pre class="codeoutput">La energia de la se&ntilde;al es: 252.0000
+ans =
+
+   252
+
+</pre><img vspace="5" hspace="5" src="RPL03_Montiel_C_Jorge_2MV1_01.png" alt=""> <h2>6.<a name="9"></a></h2><p>Resuelva el problema 3.2.3 de Lathi</p><p>La se&ntilde;al original se muestra a continuaci&oacute;n</p><pre class="language-matlab">gratd(@(n)n.*((n&gt;=0)&amp;(n&lt;=3))+(-n+6).*((n&gt;3)&amp;(n&lt;=6)),0:6)
+</pre><p><img vspace="5" hspace="5" src="P3_6.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq09779432803121043151.png" alt="$x[-n]$"></p><pre class="language-matlab">gratd(@(n)-n.*((-n&gt;=0)&amp;(-n&lt;=3))+(n+6).*((-n&gt;3)&amp;(-n&lt;=6)),0:6)
+</pre><p><img vspace="5" hspace="5" src="P3_6_a.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq13620129492043279934.png" alt="$x[n+6]$"></p><pre class="language-matlab">gratd(@(n)(n+6).*(((n+6)&gt;=0)&amp;((n+6)&lt;=3))+(-(n+6)+6).*(((n+6)&gt;3)&amp;((n+6)&lt;=6)),-6:0)
+</pre><p><img vspace="5" hspace="5" src="P3_6_b.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq12217486176770116509.png" alt="$x[n-6]$"></p><pre>  gratd(@(n)(n-6).*(((n-6)&gt;=0)&amp;((n-6)&lt;=3))+(-(n-6)+6).*(((n-6)&gt;3)&amp;((n-6)&lt;=6)),0:12)</pre><p><img vspace="5" hspace="5" src="P3_6_c.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq03858777271815293468.png" alt="$x[3n]$"></p><pre class="language-matlab">gratd(@(n)(3*n).*(((3*n)&gt;=0)&amp;((3*n)&lt;=3))+(-(3*n)+6).*(((3*n)&gt;3)&amp;((3*n)&lt;=6)),0:6)
+</pre><p><img vspace="5" hspace="5" src="P3_6_d.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq00062916740274524902.png" alt="$x[\frac{n}{3}]$"> se realiz&oacute; una modificaci&oacute;n la funci&oacute;n <i>gratd</i>, dicha modificaci&oacute;n, as&iacute; como la funci&oacute;n original, se muestran en el ap&eacute;ndice.</p><pre class="language-matlab">gratd2(@(n)(n/3).*((n/3&gt;=0)&amp;(n/3&lt;=3))+(-(n/3)+6).*(((n/3)&gt;3)&amp;((n/3)&lt;=6)),3,0:6)
+</pre><p><img vspace="5" hspace="5" src="P3_6_e.jpg" alt=""> </p><p>Para <img src="RPL03_Montiel_C_Jorge_2MV1_eq16289575105642922122.png" alt="$x[-n+3]$"></p><pre class="language-matlab">gratd(@(n)(-n+3).*((-n+3&gt;=0)&amp;(-n+3&lt;=3))+(-(-n+3)+6).*(((-n+3)&gt;3)&amp;((-n+3)&lt;=6)),-6:6)
+</pre><p><img vspace="5" hspace="5" src="P3_6_f.jpg" alt=""> </p><h2>Ap&eacute;ndices<a name="10"></a></h2><p>Funcion <i>gratd</i></p><pre class="language-matlab"><span class="keyword">function</span> y=gratd(x,n)
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+stem(n,x(n),<span class="string">'LineWidth'</span>,2,<span class="string">'Color'</span>,[1 0 1]);
+a=abs(n(1))+.5;
+b=abs(n(end))+.5;
+c=abs(min(x(n)))+.5;
+d=abs(max(x(n)))+.5;
+<span class="keyword">if</span> min(x(n))&gt;=0 &amp;&amp; n(1)&gt;=0;
+axis([0 b, 0 d])
+<span class="keyword">else</span>
+axis([-a b, -c d])
+<span class="keyword">end</span>
+grid <span class="string">on</span>
+title(<span class="string">'titulo'</span>)
+xlabel(<span class="string">'$t$'</span>,<span class="string">'interpreter'</span>,<span class="string">'latex'</span>)
+legend(<span class="string">'funcion'</span>)
+saveas(gcf,<span class="string">'nombre.jpg'</span>)
+<span class="keyword">end</span>
+</pre><p>Funcion <i>gratd</i> modificacada a <i>gratd2</i></p><pre class="language-matlab"><span class="keyword">function</span> gratd2(x,escalamiento,n)
+new=escalamiento*n;
+c=0:1:new(end);
+h=linspace(0,0,new(end)+1);
+ev=x(new);
+ev(1)=h(1);
+<span class="keyword">for</span> i=2:length(new);
+<span class="keyword">if</span> h((escalamiento-1)*i+i-(escalamiento-1))~=ev(i)
+h((escalamiento-1)*i+i-(escalamiento-1))=ev(i);
+<span class="keyword">else</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+b=abs(n(end))+.5;
+d=abs(max(x(n)))+.5;
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+axis([0 b, 0 d])
+stem(c,h,<span class="string">'LineWidth'</span>,2,<span class="string">'Color'</span>,[1 0 1])
+grid <span class="string">on</span>
+title(<span class="string">'Problema 3.2.3 e)'</span>)
+xlabel(<span class="string">'$t$'</span>,<span class="string">'interpreter'</span>,<span class="string">'latex'</span>)
+legend(<span class="string">'x[n/3]'</span>)
+saveas(gcf,<span class="string">'P3_6_e.jpg'</span>)
+</pre><h2>Referencias<a name="11"></a></h2><p>Alan V. Oppenheim &amp; Ronald W. Schafer. (2011). Tratamiento de se&ntilde;ales en tiempo discreto. Madrid: Prentice Hall.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 3: Señales en tiempo discreto
+%  Cruz Montejo Jorge Luis
+%  Montiel Cruz Jorge de Jesús
+%  2MV1
+%  Análisis de Señales y Sistemas
+%% Objetivos 
+% * Manipulación básica de MATLAB
+% * Gráficas de señales reales y complejas discretas
+% * Transfomración de señales discretas (escalamientos y traslaciones)
+% * Cálculo de energía y potencia de señales discretas
+%% Antecedentes 
+% Escalamiento horizontal de señales discretas
+%
+% El escalamiento de señales en tiempo discreto, tanto horizontal como vertical, tiene un símil con su contraparte del tiempo continuo, sin embargo, existen ciertas consideraciones a tomar en cuenta a la hora de aplicarlo a las señales del tiempo discreto, esto es, como a continuación se detalla.
+%
+% Un esclamiento vertical de señales, tanto en tiempo discreto como en tiempo continuo, funciona de la misma manera, las señales correspondientes se mueven hacia arriba o abajo, según corresponda, sin incoveniente alguno. Pero cuando se realiza un escalamiento horizontal,  ya sea de compresión o expansión, la señal en tiempo discreto sufre algunos cambios, esto es, pues, debido a la forma en la que está definida (en los números enteros), de esta manera, cuando escalamos horizontalmente con efecto de compresión existe una perdida de datos. Esto es fácil de ver, puesto que al efectuar la división esta resultará en ciertos puntos un número decimal, para los cuales nuestra función de tiempo discreto no está definida. Decimos que existe pérdida de datos.
+% Mientras que para los escalamientos horizontales con efecto de expansión habrá que realizar una consideración útil, y es que se indefine en ciertos puntos. 
+% En los siguientes ejemplos se detalla lo anteriormente expuesto.
+%
+% *Ejemplo 1: Compresión*
+%
+% Sea la señal $x[n]$ una señal del tiempo discreto, con la siguiente
+% expresión $x[n]=(n-2) u[n]$, su gráfica correspondiente
+%
+% <<EjP3_1.jpg>>
+% 
+% Si hacemos ahora $x[5n]=(5n-2) u[n]$ tendremos como resultado una pérdida
+% de datos.
+%
+% <<EjP3_1_1.jpg>>
+%
+% de la primera figura vemos que para $n=2$ el valor de la señal es $0$,
+% mientras que en la segunda figura, puesto que se comprimió por un factor
+% de $5$ y al ser 2 un número cuya división por $5$ no es un entero,
+% entonces, este dato se pierde.
+%
+% *Ejemplo 2: Expansión*
+%
+% Sea la señal $x[n]$ una señal del tiempo discreto, con la siguiente
+% expresión $x[n]=(n-2)^2 u[n]$, su gráfica correspondiente
+%
+% <<Ej2P3_1.jpg>>
+% 
+% Si hacemos ahora $x[5n]=5n-2 u[n]$ tendremos como resultado puntos sin
+% definir.
+%
+% <<Ej2P3_1_2.jpg>>
+%
+% Vemos de la primera figura que para $n=1$ el valor de la señal es $1$,
+% así pues, al expandir por un factor de 4, este valor corresponderá a
+% $n=4$ de la segunda figura, mientras que de de $(4,12)$ no existen los
+% valores, puesto que, de existir, significa que en la función original
+% existían puntos cuya multiplicación por 4 nos arroja un número en este
+% intervalo, lo cual quiere decir, en otras palabras, estaba definida para
+% números no enteros, lo cual no va acorde a nuestra definición de señal en
+% tiempo discreto.
+%
+% Convenientemente, se pueden asignar valores de cero o bien realizar
+% interpolación para asignar un valor a los valores de $n$ para los cuales
+% no esté definida la señal escalada.
+%
+%% Desarrollo 
+%
+%
+%
+%
+%
+%
+%% 1.
+% Crea una función que se llame _fun1_ y reciba tres parámetros
+% $r$, $\omega$ y $n$ la función debe regresar la evaluación
+% $f[n]=r^n\cos{[\omega n]}+ r^nj\sin{[\omega n]}$, esta función debe
+% trabajar con $r \in R^{+}$, $\omega \in R$ y $n \in N^{n}$
+%
+%   function y=fun1(r,omega,n)
+%   n2=n/floor(n);
+%   n3=uint8(n2);
+%   if r>0 && imag(omega)==0 && n3==1
+%   f=r.^n.*cos(omega*n)+r.^n*1i.*sin(omega*n)
+%   else
+%   disp('La funcion solo es valida si r es un real positivo, omega es un real y n pertenece a los enteros')
+%   f=('funcion no definida');
+%   end 
+%   y=f;
+%   end
+%
+%% 2. 
+% Construya una función que grafique funciones de $f:N\rightarrow R$ en el
+% formato de su elección y pruebe su código mostrando la gráfica de
+% $x[n]=na^nu[n]$ vs $n$ para $n \in -2,...,10$ para $a=0.9$
+%
+% <<P3_2_2_2.jpg>>
+%% 3. 
+% Construya una función que grafique funciones $f:N \rightarrow R^2$ en el
+% formato de su elección y pruebe su código mostrando la gráfica de la
+% función exponencial del primer problema, muestre la gráfica de $f[n]$
+% para $r=1.1$, $\omega=0.5$ y $n \in -2,...,20$ , además, muestre la
+% gráfica de $|f[n]|$ vs $n$ y $\angle f[n]$ vs $n$.
+%
+% <<P3_3.jpg>>
+%
+% <<P3_3_2.jpg>>
+%
+% <<P3_3_3.jpg>>
+%
+%% 4. 
+% Programe una función que calcule la energía de una señal en tiempo discreto la función se debe llamar energiadis. La función recibe dos parámetros de entrada: el vector de tiempo y las alturas asignadas. La función regresa la energía de la señal y despliega la gráfica de la señal.
+%
+%   function y=energiadis(t,x)
+%   %x son las alturas de la señal discreta
+%   %t es el vector de tiempo 
+%   x2=x.^2;
+%   E=sum(x2)
+%   y=E;
+%   fprintf('La energia de la señal es: %4.4f',y);
+%   stem(t,x);
+%   a=abs(t(1))+.5;
+%   b=abs(t(end))+.5;
+%   c=abs(min(x))+.5;
+%   d=abs(max(x))+.5;
+%   if min(x)>=0;
+%   axis([-a b, 0 d])    
+%   else
+%   axis([-a b, -c d]) 
+%   end 
+%   grid on
+%   ax = gca;
+%   ax.XAxisLocation = 'origin';
+%   ax.YAxisLocation = 'origin';
+%   end 
+%% 5. 
+% Resuelva el problema 3.1.1 de Lathi, aplicando su función anterior
+t=-3:3; x=-9:3:9;
+energia(t,x)
+%% 6. 
+% Resuelva el problema 3.2.3 de Lathi
+%
+% La señal original se muestra a continuación 
+%
+%   gratd(@(n)n.*((n>=0)&(n<=3))+(-n+6).*((n>3)&(n<=6)),0:6)
+%
+% <<P3_6.jpg>>
+%
+% Para $x[-n]$
+%
+%   gratd(@(n)-n.*((-n>=0)&(-n<=3))+(n+6).*((-n>3)&(-n<=6)),0:6)
+%
+% <<P3_6_a.jpg>>
+%
+% Para $x[n+6]$   
+%
+%   gratd(@(n)(n+6).*(((n+6)>=0)&((n+6)<=3))+(-(n+6)+6).*(((n+6)>3)&((n+6)<=6)),-6:0)
+%
+% <<P3_6_b.jpg>>
+%
+% Para $x[n-6]$
+%
+%    gratd(@(n)(n-6).*(((n-6)>=0)&((n-6)<=3))+(-(n-6)+6).*(((n-6)>3)&((n-6)<=6)),0:12) 
+%
+% <<P3_6_c.jpg>>
+% 
+% Para $x[3n]$
+% 
+%   gratd(@(n)(3*n).*(((3*n)>=0)&((3*n)<=3))+(-(3*n)+6).*(((3*n)>3)&((3*n)<=6)),0:6)
+%
+% <<P3_6_d.jpg>>
+%
+% Para $x[\frac{n}{3}]$ se realizó una modificación la función _gratd_, dicha
+% modificación, así como la función original, se muestran en el apéndice.
+% 
+%   gratd2(@(n)(n/3).*((n/3>=0)&(n/3<=3))+(-(n/3)+6).*(((n/3)>3)&((n/3)<=6)),3,0:6)
+%
+% <<P3_6_e.jpg>>
+%
+% Para $x[-n+3]$
+%
+%   gratd(@(n)(-n+3).*((-n+3>=0)&(-n+3<=3))+(-(-n+3)+6).*(((-n+3)>3)&((-n+3)<=6)),-6:6)
+%
+% <<P3_6_f.jpg>>
+%
+%% Apéndices
+% Funcion _gratd_
+%
+%   function y=gratd(x,n)
+%   ax = gca;
+%   ax.XAxisLocation = 'origin';
+%   ax.YAxisLocation = 'origin';
+%   stem(n,x(n),'LineWidth',2,'Color',[1 0 1]);
+%   a=abs(n(1))+.5;
+%   b=abs(n(end))+.5;
+%   c=abs(min(x(n)))+.5;
+%   d=abs(max(x(n)))+.5;
+%   if min(x(n))>=0 && n(1)>=0;
+%   axis([0 b, 0 d])    
+%   else
+%   axis([-a b, -c d]) 
+%   end 
+%   grid on
+%   title('titulo')
+%   xlabel('$t$','interpreter','latex')
+%   legend('funcion')
+%   saveas(gcf,'nombre.jpg')
+%   end
+%
+% Funcion _gratd_ modificacada a _gratd2_
+%
+%   function gratd2(x,escalamiento,n)
+%   new=escalamiento*n;
+%   c=0:1:new(end);
+%   h=linspace(0,0,new(end)+1);
+%   ev=x(new);
+%   ev(1)=h(1);
+%   for i=2:length(new);
+%   if h((escalamiento-1)*i+i-(escalamiento-1))~=ev(i)
+%   h((escalamiento-1)*i+i-(escalamiento-1))=ev(i);  
+%   else 
+%   end
+%   end
+%   b=abs(n(end))+.5;
+%   d=abs(max(x(n)))+.5;
+%   ax = gca;
+%   ax.XAxisLocation = 'origin';
+%   ax.YAxisLocation = 'origin';
+%   axis([0 b, 0 d]) 
+%   stem(c,h,'LineWidth',2,'Color',[1 0 1])
+%   grid on
+%   title('Problema 3.2.3 e)')
+%   xlabel('$t$','interpreter','latex')
+%   legend('x[n/3]')
+%   saveas(gcf,'P3_6_e.jpg')
+%
+%% Referencias 
+% Alan V. Oppenheim & Ronald W. Schafer. (2011). Tratamiento de señales en tiempo discreto. Madrid: Prentice Hall.
+%
+%
+%
+##### SOURCE END #####
+--></body></html>
